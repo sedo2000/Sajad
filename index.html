@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة الرئيسية</title>
+    <!-- رابط مكتبة Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* أنماط عامة */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            transition: background-color 0.5s ease;
+        }
+
+        /* نافذة الاختيار */
+        .modal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+        }
+
+        .modal-content button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content button.yes {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        .modal-content button.no {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        .modal-content button:hover {
+            opacity: 0.8;
+        }
+
+        /* إخفاء النافذة بعد الاختيار */
+        .modal.hidden {
+            display: none;
+        }
+
+        /* بقية الأنماط */
+        .profile-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #4CAF50;
+            margin: 0 auto;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-me {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #fff;
+            text-decoration: none;
+            border: 2px solid #4CAF50;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .about-me:hover {
+            background-color: #4CAF50;
+            color: #000;
+        }
+
+        /* صندوق الأيقونات */
+        .social-box {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-box .toggle-button {
+            background-color: #222;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s ease;
+        }
+
+        .social-box .toggle-button i {
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .social-box .toggle-button:hover {
+            background-color: #444;
+        }
+
+        .social-icons {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #222;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            color: #888;
+            font-size: 30px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #1DA1F2;
+        }
+
+        .social-box.active .social-icons {
+            display: flex;
+        }
+
+        /* زر التحكم في الصوت */
+        .music-control {
+            background-color: #222;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s ease;
+        }
+
+        .music-control i {
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .music-control:hover {
+            background-color: #444;
+        }
+
+        /* صفحة About Me */
+        .about-content {
+            display: none;
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #0a192f, #1a365f);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .about-content h1 {
+            font-family: 'Georgia', serif;
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        .about-content p {
+            font-family: 'Arial', sans-serif;
+            font-size: 18px;
+            line-height: 1.8;
+            margin: 15px 0;
+            color: #e0e0e0;
+        }
+
+        .back-link {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #4CAF50;
+            text-decoration: none;
+            border: 2px solid #4CAF50;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .back-link:hover {
+            background-color: #4CAF50;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- نافذة الاختيار -->
+    <div class="modal" id="choiceModal">
+        <div class="modal-content">
+            <h2>هل تريد تشغيل الموسيقى؟</h2>
+            <button class="yes" onclick="playMusic()">Yes</button>
+            <button class="no" onclick="closeModal()">No</button>
+        </div>
+    </div>
+
+    <!-- الصفحة الرئيسية -->
+    <div id="home-page">
+        <div class="profile-container">
+            <div class="profile-pic">
+                <img src="https://imgur.com/YzGnCAC.jpg" alt="Profile Picture">
+            </div>
+            <div class="about-me" onclick="showAboutPage()">About Me</div>
+        </div>
+
+        <!-- صندوق الأيقونات وزر التحكم في الصوت -->
+        <div class="social-box">
+            <!-- زر التحكم في الصوت -->
+            <div class="music-control" id="musicControl" onclick="toggleMusic()">
+                <i class="fas fa-play" id="musicIcon"></i>
+            </div>
+
+            <!-- زر التبديل للأيقونات -->
+            <div class="toggle-button" onclick="toggleSocialIcons()">
+                <i class="fas fa-share-alt"></i>
+            </div>
+
+            <!-- أيقونات التواصل الاجتماعي -->
+            <div class="social-icons">
+                <a href="https://t.me/iic404" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="https://www.instagram.com/_xnec?igsh=MWkzOW8yMW5hcjl4YQ%3D%3D&utm_source=qr" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@ut3pp?_t=ZS-8u05kh04VCi&_r=1" target="_blank">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة About Me -->
+    <div id="about-page" class="about-content">
+        <h1>About Me</h1>
+        <p>Na- Sajad Jawad</p>
+        <p>Co- Iraq 🇮🇶</p>
+        <p>Cty- Basra</p>
+        <p>Age- 24</p>
+        <p>Programmer Languages</p>
+        <p>Connect with me on the social media platforms on the home page.</p>
+        <div class="back-link" onclick="showHomePage()">العودة إلى الصفحة الرئيسية</div>
+    </div>
+
+    <!-- عنصر الصوت -->
+    <audio id="backgroundMusic" src="https://od.lk/s/MV8zNTE5NDEzODVf/Don%20Toliver%20%E2%80%93%20Too%20Many%20Nights%20%28Visualizer%29.mp3" loop></audio>
+
+    <script>
+        // عرض نافذة الاختيار عند فتح الموقع
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("choiceModal").classList.remove("hidden");
+        });
+
+        // تشغيل الموسيقى وإخفاء النافذة
+        function playMusic() {
+            const audio = document.getElementById("backgroundMusic");
+            audio.play();
+            closeModal();
+            // تغيير الأيقونة إلى "إيقاف"
+            document.getElementById("musicIcon").classList.remove("fa-play");
+            document.getElementById("musicIcon").classList.add("fa-pause");
+        }
+
+        // إخفاء النافذة
+        function closeModal() {
+            document.getElementById("choiceModal").classList.add("hidden");
+        }
+
+        // وظائف تبديل الصفحات
+        function showAboutPage() {
+            document.getElementById("home-page").style.display = "none";
+            document.getElementById("about-page").style.display = "block";
+        }
+
+        function showHomePage() {
+            document.getElementById("about-page").style.display = "none";
+            document.getElementById("home-page").style.display = "block";
+        }
+
+        // تبديل ظهور الأيقونات
+        function toggleSocialIcons() {
+            const socialBox = document.querySelector(".social-box");
+            socialBox.classList.toggle("active");
+        }
+
+        // التحكم في تشغيل وإيقاف الموسيقى
+        function toggleMusic() {
+            const audio = document.getElementById("backgroundMusic");
+            const musicIcon = document.getElementById("musicIcon");
+
+            if (audio.paused) {
+                audio.play();
+                musicIcon.classList.remove("fa-play");
+                musicIcon.classList.add("fa-pause");
+            } else {
+                audio.pause();
+                musicIcon.classList.remove("fa-pause");
+                musicIcon.classList.add("fa-play");
+            }
+        }
+
+        // تغيير لون الخلفية بشكل دوري
+        const colors = ["#000000", "#111111", "#222222", "#333333"];
+        let currentIndex = 0;
+
+        function changeBackgroundColor() {
+            document.body.style.backgroundColor = colors[currentIndex];
+            currentIndex = (currentIndex + 1) % colors.length;
+        }
+
+        setInterval(changeBackgroundColor, 3000);
+    </script>
+</body>
+</html>
