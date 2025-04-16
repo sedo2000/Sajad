@@ -23,14 +23,68 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #000;
             color: #fff;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
             height: 100vh;
-            transition: background-color 0.5s ease;
+            overflow: hidden;
+        }
+
+        /* خلفية متحركة */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(-45deg, #000000, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* جزيئات متحركة */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) translateX(500px);
+                opacity: 0;
+            }
         }
 
         /* نافذة الاختيار */
@@ -52,10 +106,12 @@
             padding: 20px;
             border-radius: 10px;
             text-align: center;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
         }
 
         .modal-content h2 {
             margin-bottom: 20px;
+            color: #4CAF50;
         }
 
         .modal-content button {
@@ -65,7 +121,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .modal-content button.yes {
@@ -79,7 +135,8 @@
         }
 
         .modal-content button:hover {
-            opacity: 0.8;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         /* إخفاء النافذة بعد الاختيار */
@@ -91,6 +148,12 @@
         .profile-container {
             margin-top: 20px;
             text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .profile-pic {
@@ -100,6 +163,12 @@
             overflow: hidden;
             border: 5px solid #4CAF50;
             margin: 0 auto;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
         }
 
         .profile-pic img {
@@ -116,13 +185,16 @@
             border: 2px solid #4CAF50;
             padding: 10px 20px;
             border-radius: 25px;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
         }
 
         .about-me:hover {
             background-color: #4CAF50;
             color: #000;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
         }
 
         /* صندوق الأيقونات */
@@ -136,7 +208,7 @@
         }
 
         .social-box .toggle-button {
-            background-color: #222;
+            background-color: rgba(34, 34, 34, 0.7);
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -145,7 +217,8 @@
             align-items: center;
             cursor: pointer;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .social-box .toggle-button i {
@@ -154,37 +227,41 @@
         }
 
         .social-box .toggle-button:hover {
-            background-color: #444;
+            background-color: rgba(68, 68, 68, 0.7);
+            transform: scale(1.1);
         }
 
         .social-icons {
             display: none;
             flex-direction: column;
             gap: 15px;
-            background-color: #222;
+            background-color: rgba(34, 34, 34, 0.7);
             padding: 10px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
         }
 
         .social-icons a {
             text-decoration: none;
             color: #888;
             font-size: 30px;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .social-icons a:hover {
             color: #1DA1F2;
+            transform: scale(1.2);
         }
 
         .social-box.active .social-icons {
             display: flex;
+            animation: fadeIn 0.5s ease;
         }
 
         /* زر التحكم في الصوت */
         .music-control {
-            background-color: #222;
+            background-color: rgba(34, 34, 34, 0.7);
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -193,7 +270,8 @@
             align-items: center;
             cursor: pointer;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .music-control i {
@@ -202,7 +280,8 @@
         }
 
         .music-control:hover {
-            background-color: #444;
+            background-color: rgba(68, 68, 68, 0.7);
+            transform: scale(1.1);
         }
 
         /* صفحة About Me */
@@ -212,9 +291,12 @@
             max-width: 600px;
             padding: 40px;
             border-radius: 15px;
-            background: linear-gradient(135deg, #0a192f, #1a365f);
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.8), rgba(26, 54, 95, 0.8));
             color: #fff;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 1s ease;
+            margin: 20px;
         }
 
         .about-content h1 {
@@ -222,6 +304,7 @@
             font-size: 36px;
             margin-bottom: 20px;
             color: #4CAF50;
+            text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
         }
 
         .about-content p {
@@ -240,23 +323,61 @@
             border: 2px solid #4CAF50;
             padding: 10px 20px;
             border-radius: 25px;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.3);
         }
 
         .back-link:hover {
             background-color: #4CAF50;
             color: #000;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
+        }
+
+        /* أداة الدردشة الجديدة */
+        .chat-widget-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        .chat-toggle-button {
+            background-color: #4CAF50;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .chat-toggle-button i {
+            font-size: 24px;
+            color: white;
+        }
+
+        .chat-toggle-button:hover {
+            transform: scale(1.1);
+            background-color: #45a049;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
         }
     </style>
 </head>
 <body>
+    <!-- خلفية متحركة -->
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
     <!-- نافذة الاختيار -->
     <div class="modal" id="choiceModal">
         <div class="modal-content">
             <h2>هل تريد تشغيل الموسيقى؟</h2>
-            <button class="yes" onclick="playMusic()">Yes</button>
-            <button class="no" onclick="closeModal()">No</button>
+            <button class="yes" onclick="playMusic()">نعم</button>
+            <button class="no" onclick="closeModal()">لا</button>
         </div>
     </div>
 
@@ -264,7 +385,7 @@
     <div id="home-page">
         <div class="profile-container">
             <div class="profile-pic">
-                <img src="https://imgur.com/YzGnCAC.jpg" alt="Profile Picture">
+                <img src="https://imgur.com/a/oKPTAPC" alt="Profile Picture">
             </div>
             <div class="about-me" onclick="showAboutPage()">About Me</div>
         </div>
@@ -283,7 +404,7 @@
 
             <!-- أيقونات التواصل الاجتماعي -->
             <div class="social-icons">
-                <a href="https://t.me/iic404" target="_blank">
+                <a href="https://t.me/Chezzile" target="_blank">
                     <i class="fab fa-telegram"></i>
                 </a>
                 <a href="https://www.instagram.com/_xnec?igsh=MWkzOW8yMW5hcjl4YQ%3D%3D&utm_source=qr" target="_blank">
@@ -309,12 +430,50 @@
     </div>
 
     <!-- عنصر الصوت -->
-    <audio id="backgroundMusic" src="https://od.lk/s/MV8zNTE5NDEzODVf/Don%20Toliver%20%E2%80%93%20Too%20Many%20Nights%20%28Visualizer%29.mp3" loop></audio>
+    <audio id="backgroundMusic" src="https://od.lk/s/NjNfNzM4NTc5Nzhf/WesGhost%20-%20DARK%20%281%29.mp3" loop></audio>
+
+    <!-- أداة الدردشة الجديدة -->
+    <div class="chat-widget-container">
+        <div class="chat-toggle-button" onclick="toggleChatWidget()">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+    </div>
+    <script src="https://chatthing.ai/chat-widget.js" type="text/javascript" id="dc86f954-9e25-4874-bd4d-1b774b877062" async defer></script>
 
     <script>
+        // إنشاء جزيئات متحركة
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // وضع عشوائي للجزيئات
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                
+                // أحجام مختلفة
+                const size = Math.random() * 3 + 1;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // شفافية مختلفة
+                particle.style.opacity = Math.random() * 0.7 + 0.3;
+                
+                // سرعات مختلفة
+                const duration = Math.random() * 20 + 10;
+                particle.style.animationDuration = duration + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
         // عرض نافذة الاختيار عند فتح الموقع
         document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("choiceModal").classList.remove("hidden");
+            createParticles();
         });
 
         // تشغيل الموسيقى وإخفاء النافذة
@@ -365,16 +524,14 @@
             }
         }
 
-        // تغيير لون الخلفية بشكل دوري
-        const colors = ["#000000", "#111111", "#222222", "#333333"];
-        let currentIndex = 0;
-
-        function changeBackgroundColor() {
-            document.body.style.backgroundColor = colors[currentIndex];
-            currentIndex = (currentIndex + 1) % colors.length;
+        // تبديل أداة الدردشة
+        function toggleChatWidget() {
+            // هذه الوظيفة تعتمد على كيفية عمل أداة الدردشة
+            // قد تحتاج إلى تعديلها حسب وثائق الأداة
+            if (window.ChatThingAI && window.ChatThingAI.toggle) {
+                window.ChatThingAI.toggle();
+            }
         }
-
-        setInterval(changeBackgroundColor, 3000);
     </script>
     <script>
     (function() {
