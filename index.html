@@ -6,17 +6,6 @@
     <title>الصفحة الرئيسية</title>
     <!-- رابط مكتبة Font Awesome للأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script>
-    (function() {
-        var script = document.createElement('script');
-        script.dataset.bot = "67efdf4952a7f4420379e37e";
-        script.dataset.zindex = "99999";
-        script.src = "https://panel.chatfuel.com/widgets/chat-widget/chat-widget.js";
-        script.async = true;
-        script.defer = true;
-        document.getElementsByTagName('head')[0].appendChild(script);
-    })()
-    </script>
     <style>
         /* أنماط عامة */
         body {
@@ -432,7 +421,7 @@
     <!-- عنصر الصوت -->
     <audio id="backgroundMusic" src="https://od.lk/s/NjNfNzM4NTc5Nzhf/WesGhost%20-%20DARK%20%281%29.mp3" loop></audio>
 
-    <!-- أداة الدردشة الجديدة -->
+    <!-- أداة الدردشة (ChatThingAI) -->
     <div class="chat-widget-container">
         <div class="chat-toggle-button" onclick="toggleChatWidget()">
             <i class="fas fa-comment-dots"></i>
@@ -524,25 +513,12 @@
             }
         }
 
-        // تبديل أداة الدردشة
+        // تبديل أداة الدردشة (ChatThingAI)
         function toggleChatWidget() {
-            // هذه الوظيفة تعتمد على كيفية عمل أداة الدردشة
-            // قد تحتاج إلى تعديلها حسب وثائق الأداة
             if (window.ChatThingAI && window.ChatThingAI.toggle) {
                 window.ChatThingAI.toggle();
             }
         }
-    </script>
-    <script>
-    (function() {
-        var script = document.createElement('script');
-        script.dataset.bot = "67efdf4952a7f4420379e37e";
-        script.dataset.zindex = "99999";
-        script.src = "https://panel.chatfuel.com/widgets/chat-widget/chat-widget.js";
-        script.async = true;
-        script.defer = true;
-        document.getElementsByTagName('head')[0].appendChild(script);
-    })()
     </script>
 </body>
 </html>
